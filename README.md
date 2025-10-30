@@ -20,22 +20,53 @@ The app allows Taylor to find recipes based on what's in their pantry, search by
 
 ## 🏗️ Architecture & Tech Stack
 
-This project is a single-page application (SPA) built with a modern frontend stack.
+This project is a single-page application (SPA) built with a modern frontend stack. All logic is contained within the `Home.jsx` component.
 
 * **Framework:** **React**
-* **Styling:** **Tailwind CSS** for utility-first styling and responsiveness.
+* **Styling:** **Tailwind CSS**
 * **State Management:**
     * React's built-in hooks (`useState`, `useRef`, `useEffect`).
     * A custom `useLocalStorage` hook to create a persistent, reactive state for the user's pantry.
 * **Data Fetching:** Native `fetch` API to interact with **TheMealDB public API**.
-* **Icons:** **Lucide-React** for clean and lightweight icons.
+* **Icons:** **Lucide-React**
 
-## 🚀 How to Run Project
+### Component & Data Flow
 
-To get this project running on your local machine, follow these simple steps.
+```mermaid
+graph TD
+    subgraph "User Interaction"
+        direction TB
+        A[User] -- (adds/removes) --> B[MyPantry.jsx]
+        A -- (types in) --> B
+        A -- (clicks) --> C[SearchForm.jsx]
+        A -- (types in) --> C
+        A -- (clicks) --> D[Random Button]
+    end
 
-### 1. Clone the Repository
+    subgraph "React Application (Home.jsx)"
+        direction TB
+        Main[Home.jsx State]
+        
+        B -- (updates pantry) --> Main
+        C -- (triggers search) --> Main
+        D -- (triggers random) --> Main
+        
+        Main -- (uses) --> E[useLocalStorage.js]
+        Main -- (renders) --> F[Results Section]
+        Main -- (renders) --> B
+        Main -- (renders) --> C
+        
+        F --> G[LoadingSpinner]
+        F --> H[ErrorMessage]
+        F --> I[RecipeList.jsx]
+        I --> J[RecipeCard.jsx]
+    end
 
-```bash
-git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-cd your-repo-name
+    subgraph "External Data"
+        direction TB
+        K[(Browser LocalStorage)]
+        L[("TheMealDB API")]
+        
+        E <--> K
+        Main -- (fetches data) --> L
+    end
