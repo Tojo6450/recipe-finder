@@ -30,6 +30,23 @@ This project is a single-page application (SPA) built with a modern frontend sta
 * **Data Fetching:** Native `fetch` API to interact with **TheMealDB public API**.
 * **Icons:** **Lucide-React**
 
+## 🚀 How to Run Project
+
+To get this project running on your local machine, open your terminal and run these commands:
+
+```bash
+# 1. Clone the repository (replace with your URL)
+git clone [https://github.com/Tojo6450/recipe-finder.git](https://github.com/Tojo6450/recipe-finder.git)
+
+# 2. Navigate into the project folder
+cd your-repo-name
+
+# 3. Install all dependencies (React, Tailwind, etc.)
+npm install
+
+# 4. Run the development server
+npm start
+
 ### Component & Data Flow
 
 ```mermaid
